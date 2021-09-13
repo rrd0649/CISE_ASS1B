@@ -1,0 +1,32 @@
+{
+  "name": "cise_ass1b",
+  "version": "1.0.0",
+  "description": "SUPER",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "app": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rrd0649/CISE_ASS1B.git"
+  },
+  "author": "Jinsung, Juwon",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rrd0649/CISE_ASS1B/issues"
+  },
+  "homepage": "https://github.com/rrd0649/CISE_ASS1B#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "config": "^3.3.6",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.5",
+    "validation": "0.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
