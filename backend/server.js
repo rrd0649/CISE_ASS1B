@@ -1,13 +1,23 @@
-const express = require('express');
-const connectDB = require('./config/db');
+const express = require("express");
+const articles = require("./dummydata/articles");
+const dotenv = require("dotenv");
+dotenv.config();
+const PORT = process.env.PORT || 5000;
 
-const app = express();
+const server = express();
 
-// Connect Database
-connectDB();
+server.get('/', (req,res) => {
+    res.send("API is running")
+})
 
-app.get('/', (req, res) => res.send('Hello world!'));
+server.get('/api/articles', (req,res) => {
+    res.json(articles);
+})
 
-const port = process.env.PORT || 8082;
+server.get('/api/articles/:id', (req,res) => {
+    const article = articles.find((n) => n._id === req.params.id);
+    res.send(article);
+    console.log(req.params);
+});
 
-app.listen(port, () => console.log(`Server running on port ${port}`));
+server.listen(PORT, console.log(`server is working and listening on PORT ${PORT}`));
