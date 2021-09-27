@@ -1,6 +1,6 @@
 import React, {useMemo} from "react";
 import articles from "../dummydata/articles.js";
-import { useTable, useSortBy, usePagination } from 'react-table';
+import { useTable, useSortBy, usePagination, useFilters, useGlobalFilter, useAsyncDebounce } from 'react-table';
 
 const Table = ({columns, data}) => {
 const {
