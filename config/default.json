@@ -1,0 +1,4 @@
+{
+    "mongoURI":
+    "mongodb+srv://team6:team6@ciseseper.kjpin.mongodb.net/CiseSEPER?retryWrites=true&w=majority"
+}
