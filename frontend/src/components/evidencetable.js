@@ -3,7 +3,71 @@ import articles from "../dummydata/articles.js";
 import { useTable, useSortBy, usePagination, useFilters, useGlobalFilter, useAsyncDebounce } from 'react-table';
 
 
+// Define a default UI for filtering
+function GlobalFilter({
+  preGlobalFilteredRows,
+  globalFilter,
+  setGlobalFilter,
+}) {
+  const count = preGlobalFilteredRows.length
+  const [value, setValue] = React.useState(globalFilter)
+  const onChange = useAsyncDebounce(value => {
+    setGlobalFilter(value || undefined)
+  }, 200)
 
+  return (
+    <span>
+      Keyword Search:{' '}
+      <input
+        value={value || ""}
+        onChange={e => {
+          setValue(e.target.value);
+          onChange(e.target.value);
+        }}
+        placeholder={`${count} records...`}
+        style={{
+          fontSize: '1.1rem',
+          border: '0',
+        }}
+      />
+    </span>
+  )
+}
+
+// This is a custom filter UI that uses a
+// slider to set the filter value between a column's
+// min and max values
+function SliderColumnFilter({
+  column: { filterValue, setFilter, preFilteredRows, id },
+}) {
+  // Calculate the min and max
+  // using the preFilteredRows
+
+  const [min, max] = React.useMemo(() => {
+    let min = preFilteredRows.length ? preFilteredRows[0].values[id] : 0
+    let max = preFilteredRows.length ? preFilteredRows[0].values[id] : 0
+    preFilteredRows.forEach(row => {
+      min = Math.min(row.values[id], min)
+      max = Math.max(row.values[id], max)
+    })
+    return [min, max]
+  }, [id, preFilteredRows])
+
+  return (
+    <>
+      <input
+        type="range"
+        min={min}
+        max={max}
+        value={filterValue || min}
+        onChange={e => {
+          setFilter(parseInt(e.target.value, 10))
+        }}
+      />
+      <button onClick={() => setFilter(undefined)}>Off</button>
+    </>
+  )
+}
 
 const Table = ({columns, data}) => {
 const {
@@ -25,29 +89,49 @@ const {
     previousPage,
     setPageSize,
     state: { pageIndex, pageSize },
+    state,
+    visibleColumns,
+    preGlobalFilteredRows,
+    setGlobalFilter,
   } = useTable(
     {
       columns,
       data,
       initialState: { pageIndex: 0 },
     },
-    
+    useGlobalFilter,
     useSortBy,
-    usePagination
+    usePagination,
   )
   // Render Data Table UI
   return (
     <>
       <table {...getTableProps()}>
         <thead>
+        <tr>
+            <th
+              colSpan={visibleColumns.length}
+              style={{
+                textAlign: 'center',
+              }}
+            >
+              <GlobalFilter
+                preGlobalFilteredRows={preGlobalFilteredRows}
+                globalFilter={state.globalFilter}
+                setGlobalFilter={setGlobalFilter}
+              />
+            </th>
+          </tr>
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(column => (
                 // Add the sorting props to control sorting. For this example
                 // we can add them into the header props
+
                 <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                   {column.render('Header')}
-                  {/* Add a sort direction indicator */}
+                  {/* Render the columns filter UI */}
+                  <div>{column.canFilter ? column.render('Filter') : null}</div>
                   <span>
                     {column.isSorted
                       ? column.isSortedDesc
@@ -56,6 +140,7 @@ const {
                       : ''}
                   </span>
                 </th>
+
               ))}
             </tr>
           ))}
