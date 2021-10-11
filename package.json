@@ -7,7 +7,7 @@
     "build": "cd frontend && npm run build",
     "lint": "eslint",
     "install-frontend": "cd frontend && npm install && npm install --prefix frontend",
-    "heroku-postbuild": "npm run install-frontend && npm run build",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run install --prefix frontend && npm run build --prefix frontend",
     "server": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "frontend": "cd frontend && npm start",
@@ -35,6 +35,7 @@
     "mongoose": "^6.0.10",
     "nodemon": "^2.0.12",
     "postinstall": "^0.7.0",
+    "react-scripts": "^4.0.3",
     "react-table": "^7.7.0"
   }
 }
