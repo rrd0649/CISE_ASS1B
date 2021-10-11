@@ -67,6 +67,7 @@ function SliderColumnFilter({
   );
 }
 
+
 function fuzzyTextFilterFn(rows, id, filterValue) {
   return matchSorter(rows, filterValue, { keys: [(row) => row.values[id]] });
 }
@@ -214,34 +215,37 @@ function ArticleSearch() {
     () => [
       {
         Header: "Article Title",
-        accessor: "titles",
-        filter: "fuzzyText", // accessor is the "key" in the data
+        accessor: "title",
       },
       {
-        Header: "Author",
-        accessor: "author",
-        filter: "fuzzyText",
+        Header: "Authors",
+        accessor: "authors",
       },
       {
-        Header: "Published_date",
-        accessor: "published_date",
-        filter: "ffuzzyText", // accessor is the "key" in the data
-      },
-      {
-        Header: "Credibity_rating",
-        accessor: "credibity_rating",
+        Header: "Published Year",
+        accessor: "published_year",
         Filter: SliderColumnFilter,
-        filter: "equals", // accessor is the "key" in the data
+        filter: "equals",
       },
       {
-        Header: "SE_method:",
+        Header: "Source",
+        accessor: "source",
+      },
+      {
+        Header: "DOI",
+        accessor: "doi",
+      },
+      {
+        Header: "SE Method",
         accessor: "SE_method",
-        filter: "fuzzyText", // accessor is the "key" in the data
+      },
+      {
+        Header: "Evidence",
+        accessor: "evidence",
       },
       {
         Header: "Claim",
         accessor: "claims",
-        filter: "fuzzyText", // accessor is the "key" in the data
       },
     ],
     []

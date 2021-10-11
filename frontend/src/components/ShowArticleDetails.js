@@ -55,30 +55,40 @@ class showArticleDetails extends Component {
           <tr>
             <th scope="row">1</th>
             <td>Title</td>
-            <td>{ article.titles }</td>
+            <td>{ article.title }</td>
           </tr>
           <tr>
             <th scope="row">2</th>
             <td>Author</td>
-            <td>{ article.author }</td>
+            <td>{ article.authors }</td>
           </tr>
           <tr>
             <th scope="row">3</th>
-            <td>Published Date</td>
-            <td>{ article.published_date }</td>
+            <td>Published Year</td>
+            <td>{ article.published_year }</td>
           </tr>
           <tr>
             <th scope="row">4</th>
-            <td>Credibity Rating</td>
-            <td>{ article.credibity_rating }</td>
+            <td>Source</td>
+            <td>{ article.source }</td>
           </tr>
           <tr>
             <th scope="row">5</th>
+            <td>DOI</td>
+            <td>{ article.doi }</td>
+          </tr>
+          <tr>
+            <th scope="row">6</th>
             <td>SE Method</td>
             <td>{ article.SE_method }</td>
           </tr>
           <tr>
-            <th scope="row">6</th>
+            <th scope="row">7</th>
+            <td>Evidence</td>
+            <td>{ article.evidence }</td>
+          </tr>
+          <tr>
+            <th scope="row">8</th>
             <td>Claim</td>
             <td>{ article.claims }</td>
           </tr>
