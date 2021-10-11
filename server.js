@@ -21,7 +21,7 @@ if(process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "./public")));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, './public', 'Apr29Home.html'));
+    res.sendFile(path.join(__dirname, './public', 'index.html'));
   });
 } else{
   app.get("/", (req,res) =>{
