@@ -1,38 +1,37 @@
 const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-//const articles = require("./dummydata/articles");
-const dotenv = require("dotenv");
-dotenv.config();
-const PORT = process.env.PORT || 5000;
+const connectDB = require("./config/db");
+var cors = require("cors");
+const path = require('path');
 
-const server = express();
-server.use(cors());
-server.use(express.json());
+// routes
+const articles = require("./routes/api/articles");
 
-const uri = process.env.MONGO_URI; // mongoDB Connect 정보
-mongoose.connect(uri, {
-  useNewUrlParser: true
-});
-const connection = mongoose.connection;
-connection.once("open", () => {
-  console.log("MongoDB database connection succes");
-});
+const app = express();
 
-/*
-server.get('/', (req,res) => {
-    res.send("API is running")
-})
+// Connect Database
+connectDB();
 
-server.get('/api/articles', (req,res) => {
-    res.json(articles);
-})
+// cors
+app.use(cors({ origin: true, credentials: true }));
 
-server.get('/api/articles/:id', (req,res) => {
-    const article = articles.find((n) => n._id === req.params.id);
-    res.send(article);
-    console.log(req.params);
-});
-*/
+// Init Middleware
+app.use(express.json({ extended: false }));
 
-server.listen(PORT, console.log(`server is working and listening on PORT ${PORT}`));
+if(process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "/client/build")));
+
+  app.get("*", (req, res) => {
+      res.sendFile(path.join(__dirname,"client","build","index.html"));
+  });
+} else{
+  app.get("/", (req,res) =>{
+      res.send("api running");
+  });
+}
+
+// use Routes
+app.use("/api/articles", articles);
+
+const port = process.env.PORT || 5000;
+
+app.listen(port, () => console.log(`Server running on port ${port}`));
