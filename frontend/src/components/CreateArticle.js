@@ -46,9 +46,6 @@ class CreateArticle extends Component {
         })
         this.props.history.push('/');
       })
-      .catch(err => {
-        console.log("Error in Createarticles!");
-      })
   };
 
   render() {
