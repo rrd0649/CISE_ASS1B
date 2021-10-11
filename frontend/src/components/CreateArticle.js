@@ -8,10 +8,10 @@ class CreateArticle extends Component {
   constructor() {
     super();
     this.state = {
-      titles: '',
-      author:'',
-      published_date:'',
-      credibity_rating:'',
+      title: '',
+      authors:'',
+      published_year:'',
+      source:'',
       SE_method: '',
       claims:''
     };
@@ -25,11 +25,13 @@ class CreateArticle extends Component {
     e.preventDefault();
 
     const data = {
-      titles: this.state.titles,
-      author: this.state.author,
-      published_date: this.state.published_date,
-      credibity_rating: this.state.credibity_rating,
+      title: this.state.title,
+      authors: this.state.authors,
+      published_year: this.state.published_year,
+      source: this.state.source,
+      doi: this.state.doi,
       SE_method: this.state.SE_method,
+      evidence: this.state.evidence,
       claims: this.state.claims
     };
 
@@ -37,17 +39,16 @@ class CreateArticle extends Component {
       .post('http://localhost:5000/api/articles', data)
       .then(res => {
         this.setState({
-          titles: '',
-          author:'',
-          published_date:'',
-          credibity_rating:'',
+          title: '',
+          authors:'',
+          published_year:'',
+          source:'',
+          doi:'',
           SE_method: '',
+          evidence: '',
          claims:''
         })
         this.props.history.push('/');
-      })
-      .catch(err => {
-        console.log("Error in Createarticles!");
       })
   };
 
@@ -73,10 +74,10 @@ class CreateArticle extends Component {
               <div className='form-group'>
                   <input
                     type='text'
-                    placeholder='titles'
-                    name='titles'
+                    placeholder='title'
+                    name='title'
                     className='form-control'
-                    value={this.state.titles}
+                    value={this.state.title}
                     onChange={this.onChange}
                   />
                 </div>
@@ -84,10 +85,23 @@ class CreateArticle extends Component {
               <div className='form-group'>
                   <input
                     type='text'
-                    placeholder='author'
-                    name='author'
+                    placeholder='authors'
+                    name='authors'
                     className='form-control'
-                    value={this.state.author}
+                    value={this.state.authors}
+                    onChange={this.onChange}
+                  />
+                </div>
+
+                <div className='form-group'>
+                  <input
+                    type='number'
+                    min='1900'
+                    max='2021'
+                    placeholder='published_year'
+                    name='published_year'
+                    className='form-control'
+                    value={this.state.published_year}
                     onChange={this.onChange}
                   />
                 </div>
@@ -95,23 +109,21 @@ class CreateArticle extends Component {
                 <div className='form-group'>
                   <input
                     type='text'
-                    placeholder='published_date'
-                    name='published_date'
+                    placeholder='Source'
+                    name='source'
                     className='form-control'
-                    value={this.state.published_date}
+                    value={this.state.source}
                     onChange={this.onChange}
                   />
                 </div>
 
                 <div className='form-group'>
                   <input
-                    type='number' 
-                    min="1" 
-                    max="5"
-                    placeholder='Credibity rating'
-                    name='credibity_rating'
+                    type='text'
+                    placeholder='DOI'
+                    name='doi'
                     className='form-control'
-                    value={this.state.credibity_rating}
+                    value={this.state.doi}
                     onChange={this.onChange}
                   />
                 </div>
@@ -130,8 +142,19 @@ class CreateArticle extends Component {
                 <div className='form-group'>
                   <input
                     type='text'
+                    placeholder='Evidence'
+                    name='evidence'
+                    className='form-control'
+                    value={this.state.evidence}
+                    onChange={this.onChange}
+                  />
+                </div>
+
+                <div className='form-group'>
+                  <input
+                    type='text'
                     placeholder='Claim'
-                    name='claim'
+                    name='claims'
                     className='form-control'
                     value={this.state.claims}
                     onChange={this.onChange}

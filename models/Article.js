@@ -1,20 +1,26 @@
 const mongoose = require('mongoose');
 
 const ArticleSchema = new mongoose.Schema({
-  titles: {
+  title: {
     type: String
   },
-  author: {
+  authors: {
     type: String,
   },
-  published_date: {
-    type: String,
-  },
-  credibity_rating: {
+  published_year: {
     type: Number,
+  },
+  source: {
+    type: String,
+  },
+  doi: {
+    type: String,
   },
   SE_method: {
     type: String
+  },
+  evidence: {
+    type: String,
   },
   claims: {
     type: String
