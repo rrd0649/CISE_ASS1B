@@ -18,7 +18,7 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(express.json({ extended: false }));
 
 if(process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "./public")));
+  app.use(express.static(path.join(__dirname, "public")));
 
   app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, './public', 'index.html'));
